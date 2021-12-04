@@ -40,29 +40,6 @@ struct ContentView: View {
                         }
                     }
                     .clipShape(RoundedRectangle(cornerRadius: 15))
-                    
-                    //.onReceive(timer) { _ in
-                    //    index += 1
-                    //    if index > images.count-1 {
-                    //        index = 0
-                    //    }
-                    //}
-                    /*
-                    Button(action: moveleft, label: {
-                        Image(systemName: "chevron.left")
-                    })
-                        .padding(5)
-                    Button(action: moveright, label: {
-                        Image(systemName: "chevron.right")
-                    })
-                        .padding(5)
-                    */
-                //}
-                
-                
-                //Stepper("Index: \(index)", value: $index.animation(.easeInOut(duration: 0.5)), in: 0...images.count-1)
-                //    .font(Font.body.monospacedDigit())
-
             }
             .padding()
         }

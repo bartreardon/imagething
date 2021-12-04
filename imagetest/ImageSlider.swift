@@ -5,6 +5,8 @@
 //  Created by Bart Reardon on 3/12/21.
 //
 
+// Basis for this view was taken from the following stack overflow post https://stackoverflow.com/questions/58896661/swiftui-create-image-slider-with-dots-as-indicators
+
 import SwiftUI
 
     
