@@ -89,49 +89,50 @@ struct PageControl: View {
     var body: some View {
         HStack(spacing: 8) {
             // move image left chevron
-            Button(action: {moveimage(direction: "left")}, label: {
-                ZStack() {
-                    Image(systemName: "circle.fill")
-                        .resizable()
-                        .foregroundColor(Color.white)
-                    
-                    Image(systemName: "chevron.left.circle.fill")
-                        .resizable()
-                        .foregroundColor(Color.black)
+            if maxIndex > 0 {
+                Button(action: {moveimage(direction: "left")}, label: {
+                    ZStack() {
+                        Image(systemName: "circle.fill")
+                            .resizable()
+                            .foregroundColor(Color.white)
+                        
+                        Image(systemName: "chevron.left.circle.fill")
+                            .resizable()
+                            .foregroundColor(Color.black)
+                    }
+                    .frame(width: 30, height: 30)
+                    .opacity(0.80)
+                })
+                .buttonStyle(.borderless)
+            
+                Spacer()
+                
+                // Centre dots
+                ForEach(0...maxIndex, id: \.self) { index in
+                    Circle()
+                        .fill(index == self.index ? Color.white : Color.gray)
+                        .frame(width: 8, height: 8)
                 }
-                .frame(width: 30, height: 30)
-                .opacity(0.80)
-            })
-            .buttonStyle(.borderless)
-            
-            Spacer()
-            
-            // Centre dots
-            ForEach(0...maxIndex, id: \.self) { index in
-                Circle()
-                    .fill(index == self.index ? Color.white : Color.gray)
-                    .frame(width: 8, height: 8)
+                
+                Spacer()
+                
+                // move image right chevron
+                Button(action: {moveimage(direction: "right")}, label: {
+                    ZStack() {
+                        Image(systemName: "circle.fill")
+                            .resizable()
+                            .foregroundColor(Color.white)
+                        
+                        Image(systemName: "chevron.right.circle.fill")
+                            .resizable()
+                            .foregroundColor(Color.black)
+                    }
+                    .frame(width: 30, height: 30)
+                    .opacity(0.80)
+                        
+                })
+                .buttonStyle(.borderless)
             }
-            
-            Spacer()
-            
-            // move image right chevron
-            Button(action: {moveimage(direction: "right")}, label: {
-                ZStack() {
-                    Image(systemName: "circle.fill")
-                        .resizable()
-                        .foregroundColor(Color.white)
-                    
-                    Image(systemName: "chevron.right.circle.fill")
-                        .resizable()
-                        .foregroundColor(Color.black)
-                }
-                .frame(width: 30, height: 30)
-                .opacity(0.80)
-                    
-            })
-            .buttonStyle(.borderless)
-            
         }
         .padding(15)
         .frame(height: 50)
