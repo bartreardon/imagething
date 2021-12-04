@@ -15,19 +15,6 @@ struct ContentView: View {
     
     let images = ["1", "2", "3", "5", "6", "7"]
     
-    func moveleft() {
-        print(index)
-        if index > 0 {
-            index -= 1
-        }
-    }
-    
-    func moveright() {
-        if index < images.count - 1 {
-            index += 1
-        }
-    }
-    
     var body: some View {
         
             VStack(spacing: 20) {

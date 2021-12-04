@@ -54,37 +54,42 @@ struct PagingView<Content>: View where Content: View {
             return -CGFloat(self.index) * geometry.size.width
         }
     }
-
-    func clampedIndex(from predictedIndex: Int) -> Int {
-        let newIndex = min(max(predictedIndex, self.index - 1), self.index + 1)
-        guard newIndex >= 0 else { return 0 }
-        guard newIndex <= maxIndex else { return maxIndex }
-        return newIndex
-    }
 }
 
 struct PageControl: View {
     @Binding var index: Int
     let maxIndex: Int
     
-    func moveleft() {
-        print(index)
-        if index > 0 {
-            index -= 1
+    func moveimage(direction: String) {
+        switch direction {
+        case "left":
+            if index > 0 {
+                index -= 1
+            }
+        case "right":
+            if index < maxIndex {
+                index += 1
+            }
+        default:
+            // reset index to 0
+            index = 0
         }
     }
     
-    func moveright() {
-        if index < maxIndex {
-            index += 1
+    func rotateIndex() {
+        index += 1
+        if index > maxIndex {
+            index = 0
         }
     }
-    
+        
+    // change image every 4 seconds (TODO: remove and make this a configurable paramater)
     let timer = Timer.publish(every: 4, on: .main, in: .common).autoconnect()
     
     var body: some View {
         HStack(spacing: 8) {
-            Button(action: moveleft, label: {
+            // move image left chevron
+            Button(action: {moveimage(direction: "left")}, label: {
                 ZStack() {
                     Image(systemName: "circle.fill")
                         .resizable()
@@ -97,15 +102,21 @@ struct PageControl: View {
                 .frame(width: 30, height: 30)
                 .opacity(0.80)
             })
-                .buttonStyle(.borderless)
+            .buttonStyle(.borderless)
+            
             Spacer()
+            
+            // Centre dots
             ForEach(0...maxIndex, id: \.self) { index in
                 Circle()
                     .fill(index == self.index ? Color.white : Color.gray)
                     .frame(width: 8, height: 8)
             }
+            
             Spacer()
-            Button(action: moveright, label: {
+            
+            // move image right chevron
+            Button(action: {moveimage(direction: "right")}, label: {
                 ZStack() {
                     Image(systemName: "circle.fill")
                         .resizable()
@@ -119,15 +130,14 @@ struct PageControl: View {
                 .opacity(0.80)
                     
             })
-                .buttonStyle(.borderless)
+            .buttonStyle(.borderless)
+            
         }
         .padding(15)
         .frame(height: 50)
+        // increment the image index. reset to 0 when we reach the end
         .onReceive(timer) { _ in
-            index += 1
-            if index > maxIndex {
-                index = 0
-            }
+            rotateIndex()
         }
     }
 }
