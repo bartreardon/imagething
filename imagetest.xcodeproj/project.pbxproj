@@ -14,6 +14,7 @@
 		418A7B7F2759965200E4D6F1 /* imagetestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418A7B7E2759965200E4D6F1 /* imagetestTests.swift */; };
 		418A7B892759965200E4D6F1 /* imagetestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418A7B882759965200E4D6F1 /* imagetestUITests.swift */; };
 		418A7B8B2759965200E4D6F1 /* imagetestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418A7B8A2759965200E4D6F1 /* imagetestUITestsLaunchTests.swift */; };
+		418A7BA22759AEC400E4D6F1 /* ImageSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418A7BA12759AEC400E4D6F1 /* ImageSlider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		418A7B842759965200E4D6F1 /* imagetestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = imagetestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		418A7B882759965200E4D6F1 /* imagetestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imagetestUITests.swift; sourceTree = "<group>"; };
 		418A7B8A2759965200E4D6F1 /* imagetestUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imagetestUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		418A7BA12759AEC400E4D6F1 /* ImageSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSlider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +99,7 @@
 			children = (
 				418A7B6C2759965100E4D6F1 /* imagetestApp.swift */,
 				418A7B6E2759965100E4D6F1 /* ContentView.swift */,
+				418A7BA12759AEC400E4D6F1 /* ImageSlider.swift */,
 				418A7B702759965200E4D6F1 /* Assets.xcassets */,
 				418A7B752759965200E4D6F1 /* imagetest.entitlements */,
 				418A7B722759965200E4D6F1 /* Preview Content */,
@@ -261,6 +264,7 @@
 			files = (
 				418A7B6F2759965100E4D6F1 /* ContentView.swift in Sources */,
 				418A7B6D2759965100E4D6F1 /* imagetestApp.swift in Sources */,
+				418A7BA22759AEC400E4D6F1 /* ImageSlider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
