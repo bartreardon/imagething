@@ -15,14 +15,16 @@ struct ImageSlider<Content>: View where Content: View {
     @Binding var index: Int
     let maxIndex: Int
     let content: () -> Content
+    let autoPlaySeconds: Double
 
     @State private var offset = CGFloat.zero
     @State private var dragging = false
 
-    init(index: Binding<Int>, maxIndex: Int, @ViewBuilder content: @escaping () -> Content) {
+    init(index: Binding<Int>, maxIndex: Int, autoPlaySeconds: Double, @ViewBuilder content: @escaping () -> Content) {
         self._index = index
         self.maxIndex = maxIndex
         self.content = content
+        self.autoPlaySeconds = autoPlaySeconds
     }
     
     var body: some View {
@@ -42,7 +44,7 @@ struct ImageSlider<Content>: View where Content: View {
                 .clipped()
                 //.border(Color.green)
                 if maxIndex > 0 {
-                    PageControl(index: $index.animation(.easeInOut(duration: 0.5)), maxIndex: maxIndex)
+                    PageControl(index: $index.animation(.easeInOut(duration: 0.5)), maxIndex: maxIndex, autoPlaySeconds: autoPlaySeconds)
                 }
             }
         }
@@ -60,7 +62,11 @@ struct ImageSlider<Content>: View where Content: View {
 struct PageControl: View {
     @Binding var index: Int
     let maxIndex: Int
+    let autoPlaySeconds: Double
     
+    @State private var timerTicks : Double = 0
+    @State private var timerDisplay = 0.0
+        
     func moveimage(direction: String) {
         switch direction {
         case "left":
@@ -75,6 +81,8 @@ struct PageControl: View {
             // reset index to 0
             index = 0
         }
+        timerTicks = 0
+        timerDisplay = 0
     }
     
     func rotateIndex() {
@@ -83,11 +91,47 @@ struct PageControl: View {
             index = 0
         }
     }
-        
+    
     // change image every 4 seconds (TODO: remove and make this a configurable paramater)
-    let timer = Timer.publish(every: 4, on: .main, in: .common).autoconnect()
+    var timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    var countDownTimer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
+    @State private var countDownTimerWidth : CGFloat = 0
     
     var body: some View {
+        // display our own progress timer
+        GeometryReader { barWidth in
+            VStack() {
+                Spacer()
+                ZStack(alignment: .leading) {
+                    Rectangle() // background of the progress bar
+                        .fill(Color.secondary.opacity(0.5))
+                        .frame(height: 50)
+                    
+                    Rectangle()
+                        .fill(Color.white.opacity(0.5))
+                        //.animation(.easeIn(duration: 0.1))
+                        .frame(width: countDownTimerWidth, height: 8, alignment: .bottomLeading)
+                        .offset(y:22)
+                }
+                .frame(alignment: .bottom)
+                .onReceive(countDownTimer) { _ in
+                    if timerDisplay < (autoPlaySeconds)*100 {
+                        timerDisplay += 1
+                        if timerDisplay == (autoPlaySeconds)*100 {
+                            timerDisplay = 0
+                        }
+                        if timerDisplay > 30 {
+                            countDownTimerWidth = (barWidth.size.width/((autoPlaySeconds*100)-10))*timerDisplay
+                        } else {
+                            countDownTimerWidth = 0
+                        }
+                    } else {
+                        timerDisplay = 0
+                    }
+                }
+            }
+        }
+        
         HStack(spacing: 8) {
             // move image left chevron
             
@@ -138,7 +182,13 @@ struct PageControl: View {
         .frame(height: 50)
         // increment the image index. reset to 0 when we reach the end
         .onReceive(timer) { _ in
-            rotateIndex()
+            if autoPlaySeconds > 0 {
+                timerTicks += 1
+                if timerTicks == autoPlaySeconds {
+                    rotateIndex()
+                    timerTicks = 0
+                }
+            }
         }
     }
 }

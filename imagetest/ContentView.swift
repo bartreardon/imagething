@@ -20,7 +20,7 @@ struct ContentView: View {
         
             VStack(spacing: 20) {
                 //HStack() {
-                    ImageSlider(index: $index.animation(), maxIndex: images.count - 1) {
+                    ImageSlider(index: $index.animation(), maxIndex: images.count - 1, autoPlaySeconds: 8) {
                         ForEach(self.images, id: \.self) { imageName in
                             Image(imageName)
                                 .resizable()
